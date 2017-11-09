@@ -1,4 +1,4 @@
-# Install: pip install pycorenlp && w-get blah blah
+# Install: pip install pycorenlp && wget http://nlp.stanford.edu/software/stanford-parser-full-2016-10-31.zip
 # Install: pip install nltk
 from pycorenlp import StanfordCoreNLP
 from nltk.tree import Tree
@@ -11,7 +11,6 @@ sentimentDictionary = {}
 
 # Populate dictionary {"the word": word, "the sentiment": sentiment} with words
 # from Corpora
-
 readFiles(sentimentDictionary)
 
 # Test for the sentimentDictionary
