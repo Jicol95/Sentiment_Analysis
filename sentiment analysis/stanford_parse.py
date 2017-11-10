@@ -36,6 +36,8 @@ tree = Tree.fromstring(s)
 #tree.pretty_print()
 
 phrases = listify(tree)
+for phrase in phrases:
+    print(phrase)
 
 for phrase in phrases:
     if is_even(phrases[1]):
