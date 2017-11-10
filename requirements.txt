@@ -22,6 +22,7 @@ requests==2.18.4
 six==1.11.0
 spacy==2.0.1
 termcolor==1.1.0
+textblob==0.13.0
 thinc==6.10.0
 toolz==0.8.2
 tqdm==4.19.4

@@ -3,7 +3,7 @@ import re
 
 
 
-def readFiles(sentimentDictionary):
+def read_files(sentimentDictionary):
 
     posDictionary = open('../Corpora/positive-words.txt', 'r', encoding="ISO-8859-1")
     posWordList = re.findall(r"[a-z\-]+", posDictionary.read())
