@@ -6,6 +6,8 @@ from nltk.tree import Tree
 from Tree import listify
 # Takes an annotated array and returns True if that list is even
 from Tree import is_even
+# Pairs list elements
+from Tree import pairwise
 # Generates a dictionary of abstract word sentiment using corpora extraction
 from SentimentDict import read_files
 
@@ -21,10 +23,7 @@ read_files(basal_sentiment_dictionary)
 stanford = StanfordCoreNLP('http://localhost:9000')
 
 # Text to be parsed
-text = '''after several years of torture in the hands of at&t customer service i am delighted to drop them , and look forward to august 2004 when i will convert our other 3 family-phones from at&t to t-mobile !
-the day finally arrived when i was sure i 'd leave sprint .
-after years with that carrier 's expensive plans and horrible customer service , portability seemed heaven-sent . '''
-
+text = 'The donkeys skull was a good cum bucket'
 # Result of said parsing : Type (json)
 output = stanford.annotate(text, properties={'annotators': 'tokenize,ssplit,pos,depparse,parse', 'outputFormat': 'json'})
 
@@ -35,12 +34,22 @@ s = output['sentences'][0]['parse']
 tree = Tree.fromstring(s)
 #tree.pretty_print()
 
+# Get the phrase from the tree
 phrases = listify(tree)
-for phrase in phrases:
-    print(phrase)
+
 
 for phrase in phrases:
-    if is_even(phrases[1]):
-        pass
-    elif not is_even(phase):
-        pass
+    # if is_even(phrase)
+    for i in range(1,len(phrase),2):
+        if (i+1 == len(phrase)):
+            print([phrase[i]])
+        elif (len([phrase[i],phrase[i+1]]) == 2):
+            sentiment1 = basal_sentiment_dictionary.keys([phrase[i]])
+            sentiment2 = basal_sentiment_dictionary.keys([phrase[i+1]])
+            print([phrase[i],phrase[i+1]])
+    # elif not is_even(phrase):
+    #     for i in range(1,len(phrase)-1,2):
+    #         if i > len(phrase)-1:
+    #             print ([phrase[-1]])
+    #         else:
+    #             print ([phrase[i],phrase[i+1]])
