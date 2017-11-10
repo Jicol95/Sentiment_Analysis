@@ -15,3 +15,9 @@ def read_files(sentimentDictionary):
         sentimentDictionary[i] = "+"
     for i in negWordList:
         sentimentDictionary[i] = "-"
+
+def read_det_file():
+
+    determiners = open('../Corpora/det-words.txt', 'r', encoding="ISO-8859-1")
+    determiner_bank = re.findall(r"[a-z\-]+", determiners.read())
+    return determiner_bank
