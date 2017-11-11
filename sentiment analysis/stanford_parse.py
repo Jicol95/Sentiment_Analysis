@@ -2,34 +2,24 @@
 from pycorenlp import StanfordCoreNLP
 # Install: pip install nltk
 from nltk.tree import Tree
-# Takes an nltk tree and flattens it to an array of NP & VPs
-from Tree import listify
-# Takes an annotated array and returns True if that list is even
-from Tree import is_even
-# Pairs list elements
-from Tree import pairwise
-# Generates a dictionary of abstract word sentiment using corpora extraction
-from SentimentDict import read_files
-from SentimentDict import read_det_file
+from textblob import TextBlob
+from Tree import listify, is_even, pairwise
+from SentimentDict import read_files, read_det_file
+
 
 # Instantiate dictionary that
 # will contain {"the word": word, "the sentiment": sentiment}
 basal_sentiment_dictionary = {}
+read_files(basal_sentiment_dictionary)
 
 # Instantiate dictionary that will contain [word,word,word]
 basal_determiner_bank = read_det_file()
-
-# Populate dictionary {"the word": word, "the sentiment": sentiment} with words
-# from Corpora
-read_files(basal_sentiment_dictionary)
-
-print(basal_determiner_bank)
 
 #  Start StanfordCoreNLP server at port 9000
 stanford = StanfordCoreNLP('http://localhost:9000')
 
 # Text to be parsed
-text = 'The is a nokia phone review'
+text = 'The senators supporting the leader failed to praise his hopeless HIV prevention program'
 # Result of said parsing : Type (json)
 output = stanford.annotate(text, properties={'annotators': 'tokenize,ssplit,pos,depparse,parse', 'outputFormat': 'json'})
 
@@ -43,25 +33,75 @@ tree = Tree.fromstring(s)
 # Get the phrase from the tree
 phrases = listify(tree)
 
-
+# For each phrase in the parsed text
 for phrase in phrases:
-    # if is_even(phrase)
+    # Iterate through the words in a phrase
     for i in range(1,len(phrase),2):
+
+        # If odd amount of words in phrase the last word is on it's own
         if (i+1 == len(phrase)):
             print([phrase[i]])
+
+        # If even then pair up words
         elif (len([phrase[i],phrase[i+1]]) == 2):
+
+            # If our knowledge base has the word's sentiment
             if phrase[i] in basal_sentiment_dictionary:
+
+                # Print the sentiment
                 print(basal_sentiment_dictionary[phrase[i]])
+
+            # If the the phrase is a known determiner
             elif phrase[i] in basal_determiner_bank:
                 print('DET')
+
+            # If our knowledge base doesn't include this word then lookup the
+            # the sentiment using textblob library
             else:
-                print('N')
+                # convert the word to a TextBlob friendly format
+                word = TextBlob(phrase[i])
+
+                # if the sentiment is 0 then print N
+                if word.sentiment[0] == 0:
+                    print('N')
+
+                # If the sentiment is > 0 then print +
+                elif word.sentiment[0] > 0:
+                    print('+')
+
+                # If the sentiment is < 0 then print -
+                elif word.sentiment[0] < 0:
+                    print('-')
+
+            # If our knowledge base has the word's sentiment
             if phrase[i+1] in basal_sentiment_dictionary:
+
+                # Print the sentiment
                 print(basal_sentiment_dictionary[phrase[i+1]])
+
+            # If the word is a known determinmer
             elif phrase[i+1] in basal_determiner_bank:
                 print('DET')
+
+            # If our knowledge base doesn't include this word then lookup the
+            # the sentiment using textblob library
             else:
-                print('N')
-            #sentiment1 = basal_sentiment_dictionary.keys([phrase[i]])
-            #sentiment2 = basal_sentiment_dictionary.keys([phrase[i+1]])
+                # convert the word to a TextBlob friendly format
+                word = TextBlob(phrase[i+1])
+
+                # if the sentiment is 0 then print N
+                if word.sentiment[0] == 0:
+                    basal_sentiment_dictionary[phrase[i+1]] = 'N'
+                    print('N')
+
+                # If the sentiment is > 0 then print +
+                elif word.sentiment[0] > 0:
+                    basal_sentiment_dictionary[phrase[i+1]] = '+'
+                    print('+')
+
+                # If the sentiment is < 0 then print -
+                elif word.sentiment[0] < 0:
+                    basal_sentiment_dictionary[phrase[i+1]] = '-'
+                    print('-')
+
             print([phrase[i],phrase[i+1]])

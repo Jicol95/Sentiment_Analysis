@@ -4,9 +4,9 @@
 Setup
 
 1) Pip install requirements.txt
-1) wget http://nlp.stanford.edu/software/stanford-corenlp-full-2016.zip
-3) put stanford-parser-full-2015-04-20.zip in sentiment analysis dir
-4) unpack stanford-corenlp-full-2016
+1) wget http://nlp.stanford.edu/software/stanford-corenlp-full-2016.10.31.zip
+3) put stanford-corenlp-full-2016.10.31 in sentiment analysis dir
+4) unpack stanford-corenlp-full-2016.10.31
 
 Run
 
