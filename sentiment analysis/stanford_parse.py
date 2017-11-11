@@ -35,11 +35,43 @@ phrases = listify(tree)
 
 # For each phrase in the parsed text
 for phrase in phrases:
+    print("---" + phrase[0] + "-----")
     # Iterate through the words in a phrase
     for i in range(1,len(phrase),2):
 
         # If odd amount of words in phrase the last word is on it's own
         if (i+1 == len(phrase)):
+            # If our knowledge base has the word's sentiment
+            if phrase[i] in basal_sentiment_dictionary:
+
+                # Print the sentiment
+                print(basal_sentiment_dictionary[phrase[i]])
+
+            # If the the phrase is a known determiner
+            elif phrase[i] in basal_determiner_bank:
+                print('N')
+
+            # If our knowledge base doesn't include this word then lookup the
+            # the sentiment using textblob library
+            else:
+                # convert the word to a TextBlob friendly format
+                word = TextBlob(phrase[i])
+
+                # if the sentiment is 0 then print N
+                if word.sentiment[0] == 0:
+                    basal_sentiment_dictionary[phrase[i]] = 'N'
+                    print('N')
+
+                # If the sentiment is > 0 then print +
+                elif word.sentiment[0] > 0:
+                    basal_sentiment_dictionary[phrase[i]] = '+'
+                    print('+')
+
+                # If the sentiment is < 0 then print -
+                elif word.sentiment[0] < 0:
+                    basal_sentiment_dictionary[phrase[i]] = 'N'
+                    print('-')
+
             print([phrase[i]])
 
         # If even then pair up words
@@ -53,7 +85,7 @@ for phrase in phrases:
 
             # If the the phrase is a known determiner
             elif phrase[i] in basal_determiner_bank:
-                print('DET')
+                print('N')
 
             # If our knowledge base doesn't include this word then lookup the
             # the sentiment using textblob library
@@ -63,14 +95,17 @@ for phrase in phrases:
 
                 # if the sentiment is 0 then print N
                 if word.sentiment[0] == 0:
+                    basal_sentiment_dictionary[phrase[i+1]] = 'N'
                     print('N')
 
                 # If the sentiment is > 0 then print +
                 elif word.sentiment[0] > 0:
+                    basal_sentiment_dictionary[phrase[i+1]] = '+'
                     print('+')
 
                 # If the sentiment is < 0 then print -
                 elif word.sentiment[0] < 0:
+                    basal_sentiment_dictionary[phrase[i+1]] = 'N'
                     print('-')
 
             # If our knowledge base has the word's sentiment
@@ -81,7 +116,7 @@ for phrase in phrases:
 
             # If the word is a known determinmer
             elif phrase[i+1] in basal_determiner_bank:
-                print('DET')
+                print('N')
 
             # If our knowledge base doesn't include this word then lookup the
             # the sentiment using textblob library
