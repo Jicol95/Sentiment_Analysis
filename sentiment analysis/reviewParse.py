@@ -2,20 +2,14 @@ import sys
 import re
 import numpy
 
-def main():
-
-    reviewData = initDic()
-
-    print(reviewData)
-
 def initDic():
     with open('../Test_Files/nokia-pos.txt', 'r', encoding="ISO-8859-1") as x:
-        posText = x.read().replace('\n', '')
-        posText = posText.split(" . ")
+        posText = x.read()#.replace('\n', '')
+        posText = posText.split(r"\n ")
 
     with open('../Test_Files/nokia-neg.txt', 'r', encoding="ISO-8859-1") as y:
-        negText = y.read().replace('\n', '')
-        negText = negText.split(" . ")
+        negText = y.read()#.replace('\n', '')
+        negText = negText.split(r"\n")
     #Each review ends with a " . " however, some parts end with a " . ", even if it isn't the end of the review."
 
     reviewData = {}
@@ -24,7 +18,11 @@ def initDic():
     reviewData['positiveReviews'] = posText
     reviewData['negativeReviews'] = negText
 
+    # for x in reviewData['positiveReviews']:
+    #     print(x)
+    # for x in reviewData['negativeReviews']:
+    #     print(x)
     return reviewData
 
 if __name__ == '__main__':
-    main()
+    initDic()
