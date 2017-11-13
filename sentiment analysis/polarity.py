@@ -16,12 +16,16 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
                 if phrase[i] in basal_sentiment_dictionary:
 
                     # Print the sentiment
-                    words_to_symbols.append(basal_sentiment_dictionary[phrase[i]])
-                    phrase[i] = basal_sentiment_dictionary[phrase[i]]
+                    if basal_sentiment_dictionary[phrase[i]] == 'N':
+                        phrase[i] = 0
+                    elif basal_sentiment_dictionary[phrase[i]] == '+':
+                        phrase[i] = 1
+                    elif basal_sentiment_dictionary[phrase[i]] == '-':
+                        phrase[i] = -1
 
                 # If the the phrase is a known determiner
                 elif phrase[i] in basal_determiner_bank:
-                    phrase[i] = 'N'
+                    phrase[i] = 0
                     # print('N')
 
                 # If our knowledge base doesn't include this word then lookup the
@@ -33,21 +37,23 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
                     # if the sentiment is 0 then print N
                     if word.sentiment[0] == 0:
                         basal_sentiment_dictionary[phrase[i]] = 'N'
-                        phrase[i] = 'N'
+                        phrase[i] = 0
                         # print('N')
 
                     # If the sentiment is > 0 then print +
                     elif word.sentiment[0] > 0:
                         basal_sentiment_dictionary[phrase[i]] = '+'
-                        phrase[i] = '+'
+                        phrase[i] = 1
                         # print('+')
 
                     # If the sentiment is < 0 then print -
                     elif word.sentiment[0] < 0:
                         basal_sentiment_dictionary[phrase[i]] = '-'
-                        phrase[i] = '-'
+                        phrase[i] = -1
                         # print('-')
                 words_to_symbols.append(phrase[i])
+                if i == len(phrases)-1:
+                    frazes.append(words_to_symbols)
                 # print([phrase[i]])
 
             # If even then pair up words
@@ -57,12 +63,16 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
                 if phrase[i] in basal_sentiment_dictionary:
 
                     # Print the sentiment
-                    # print(basal_sentiment_dictionary[phrase[i]])
-                    phrase[i] = basal_sentiment_dictionary[phrase[i]]
+                    if basal_sentiment_dictionary[phrase[i]] == 'N':
+                        phrase[i] = 0
+                    elif basal_sentiment_dictionary[phrase[i]] == '+':
+                        phrase[i] = 1
+                    elif basal_sentiment_dictionary[phrase[i]] == '-':
+                        phrase[i] = -1
 
                 # If the the phrase is a known determiner
                 elif phrase[i] in basal_determiner_bank:
-                    phrase[i] = 'N'
+                    phrase[i] = 0
                     # print('N')
 
                 # If our knowledge base doesn't include this word then lookup the
@@ -74,31 +84,35 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
                     # if the sentiment is 0 then print N
                     if word.sentiment[0] == 0:
                         basal_sentiment_dictionary[phrase[i+1]] = 'N'
-                        phrase[i] = 'N'
+                        phrase[i] = 0
                         # print('N')
 
                     # If the sentiment is > 0 then print +
                     elif word.sentiment[0] > 0:
                         basal_sentiment_dictionary[phrase[i+1]] = '+'
-                        phrase[i] = '+'
+                        phrase[i] = 1
                         # print('+')
 
                     # If the sentiment is < 0 then print -
                     elif word.sentiment[0] < 0:
                         basal_sentiment_dictionary[phrase[i+1]] = 'N'
-                        phrase[i] = '-'
+                        phrase[i] = -1
                         # print('-')
 
                 # If our knowledge base has the word's sentiment
                 if phrase[i+1] in basal_sentiment_dictionary:
 
                     # Print the sentiment
-                    # print(basal_sentiment_dictionary[phrase[i+1]])
-                    phrase[i+1] = basal_sentiment_dictionary[phrase[i+1]]
+                    if basal_sentiment_dictionary[phrase[i+1]] == 'N':
+                        phrase[i+1] = 0
+                    elif basal_sentiment_dictionary[phrase[i+1]] == '+':
+                        phrase[i+1] = 1
+                    elif basal_sentiment_dictionary[phrase[i+1]] == '-':
+                        phrase[i+1] = -1
 
                 # If the word is a known determinmer
                 elif phrase[i+1] in basal_determiner_bank:
-                    phrase[i+1] = 'N'
+                    phrase[i+1] = 0
                     # print('N')
 
                 # If our knowledge base doesn't include this word then lookup the
@@ -110,19 +124,19 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
                     # if the sentiment is 0 then print N
                     if word.sentiment[0] == 0:
                         basal_sentiment_dictionary[phrase[i+1]] = 'N'
-                        phrase[i+1] = 'N'
+                        phrase[i+1] = 0
                         # print('N')
 
                     # If the sentiment is > 0 then print +
                     elif word.sentiment[0] > 0:
                         basal_sentiment_dictionary[phrase[i+1]] = '+'
-                        phrase[i+1] = '+'
+                        phrase[i+1] = 1
                         # print('+')
 
                     # If the sentiment is < 0 then print -
                     elif word.sentiment[0] < 0:
                         basal_sentiment_dictionary[phrase[i+1]] = '-'
-                        phrase[i+1] = '-'
+                        phrase[i+1] = -1
                         # print('-')
                 words_to_symbols.append(tuple((phrase[i],phrase[i+1])))
                 if i == len(phrases)-1:

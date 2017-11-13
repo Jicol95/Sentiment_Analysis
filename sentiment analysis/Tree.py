@@ -65,24 +65,3 @@ def listify(tree):
                 phrases.append(phrase)
 
     return phrases
-
-def is_even(phrase):
-    length = len(phrase)-1
-    if length % 2 == 0:
-        return True
-    elif length % 2 == 1:
-        return False
-    elif length == 0:
-        return False
-
-def pairwise(iterable):
-    "s -> (s0,s1), (s1,s2), (s2, s3), ..."
-    a, b = tee(iterable)
-    next(b, None)
-    return izip(a, b)
-
-def node_pair_vote(phrase):
-    if is_even(phrase):
-        pass
-    elif is_even(phrase):
-        pass

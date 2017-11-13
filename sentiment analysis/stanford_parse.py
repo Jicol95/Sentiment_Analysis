@@ -2,17 +2,20 @@
 from pycorenlp import StanfordCoreNLP
 # Install: pip install nltk
 from nltk.tree import Tree
+# Function that converts words to abstract polarity values
 from polarity import polarity
-from Tree import listify, is_even, pairwise
+# Gets the phrase of a sentence
+from Tree import listify
+# Functions for populating the knowledge base
 from SentimentDict import read_files, read_det_file
+# Function for grouping, voting and returns the sentient of a sentece
+from sentence_sentiment import sentence_sentiment
 
-
-# Instantiate dictionary that
-# will contain {"the word": word, "the sentiment": sentiment}
+# populates a dictionary of words to which the sentiment is known
 basal_sentiment_dictionary = {}
 read_files(basal_sentiment_dictionary)
 
-# Instantiate dictionary that will contain [word,word,word]
+# Generates a list of known determiners
 basal_determiner_bank = read_det_file()
 
 #  Start StanfordCoreNLP server at port 9000
@@ -33,6 +36,8 @@ tree = Tree.fromstring(s)
 # Get the phrase from the tree
 phrases = listify(tree)
 
-frazes = polarity(phrases,basal_sentiment_dictionary,basal_determiner_bank)
+# Converts words in phrase to abstract polarity symbols
+words_as_polarity = polarity(phrases,basal_sentiment_dictionary,basal_determiner_bank)
 
-print(frazes)
+# Calcualtes the sentiment of a sentence as per 'Sentiment Composition'
+sentence_sentiment = sentence_sentiment(words_as_polarity)
