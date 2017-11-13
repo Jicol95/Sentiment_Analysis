@@ -5,7 +5,7 @@ def sentence_sentiment (words_as_polarity):
 
     print(words_as_polarity)
 
-    while all(len(phrase) != 2 for phrase in words_as_polarity):
+    while any(len(phrase) != 2 for phrase in words_as_polarity):
 
 
         words_as_polarity = vote(words_as_polarity)
@@ -21,7 +21,10 @@ def sentence_sentiment (words_as_polarity):
         print(words_as_polarity)
 
     if all(len(phrase) == 2 for phrase in words_as_polarity):
-        sentence_sentiment = words_as_polarity[0][1] + words_as_polarity[1][1]
+        sentiments = []
+        for i in range(0, len(words_as_polarity)):
+            sentiments.append(words_as_polarity[i][1])
+        sentence_sentiment = sum(sentiments)
         if sentence_sentiment == 0:
             print('sentence is neutral')
         elif sentence_sentiment > 0:
@@ -29,4 +32,4 @@ def sentence_sentiment (words_as_polarity):
         elif sentence_sentiment < 0:
             print('sentence is negative')
 
-    return sentence_sentiment
+        return sentence_sentiment

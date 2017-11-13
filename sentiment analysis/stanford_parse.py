@@ -22,7 +22,7 @@ basal_determiner_bank = read_det_file()
 stanford = StanfordCoreNLP('http://localhost:9000')
 
 # Text to be parsed
-text = 'the senators supporting the leader failed to praise his hopeless HIV prevention program'
+text = 'The good bad dog is barking so loud'
 # Result of said parsing : Type (json)
 output = stanford.annotate(text, properties={'annotators': 'tokenize,ssplit,pos,depparse,parse', 'outputFormat': 'json'})
 
