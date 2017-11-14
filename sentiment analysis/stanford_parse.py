@@ -8,8 +8,11 @@ from polarity import polarity
 from Tree import listify
 # Functions for populating the knowledge base
 from SentimentDict import read_files, read_det_file
+# returns a dict of reviews
+from reviewParse import initDic
 # Function for grouping, voting and returns the sentient of a sentece
 from sentence_sentiment import sentence_sentiment
+import re
 
 # populates a dictionary of words to which the sentiment is known
 basal_sentiment_dictionary = {}
@@ -18,11 +21,19 @@ read_files(basal_sentiment_dictionary)
 # Generates a list of known determiners
 basal_determiner_bank = read_det_file()
 
+# dictionary of reviews
+reviews = initDic()
+posReviews = reviews['positiveReviews']
+negReviews = reviews['negativeReviews']
+
 #  Start StanfordCoreNLP server at port 9000
 stanford = StanfordCoreNLP('http://localhost:9000')
 
+
 # Text to be parsed
-text = 'The good bad dog is barking so loud'
+text = "The senetors supporting the leaders wouldn't praise his hopless HV prevention program"
+text = re.sub(r'[^\w\s]','',text)
+print(text)
 # Result of said parsing : Type (json)
 output = stanford.annotate(text, properties={'annotators': 'tokenize,ssplit,pos,depparse,parse', 'outputFormat': 'json'})
 
@@ -31,7 +42,7 @@ s = output['sentences'][0]['parse']
 
 # Reformatting as an NLTK obj same type as s
 tree = Tree.fromstring(s)
-#tree.pretty_print()
+tree.pretty_print()
 
 # Get the phrase from the tree
 phrases = listify(tree)
