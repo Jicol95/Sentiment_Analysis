@@ -3,16 +3,18 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
     frazes = []
     # For each phrase in the parsed text
     for phrase in phrases:
+
         words_to_symbols = []
         words_to_symbols.append(phrase[0])
 
         # Iterate through the words in a phrase
         for i in range(1,len(phrase),2):
-            print (i)
+
             # If odd amount of words in phrase the last word is on it's own
             if (i+1 == len(phrase)):
                 # If our knowledge base has the word's sentiment
                 if phrase[i] in basal_sentiment_dictionary:
+
                     # Print the sentiment
                     if basal_sentiment_dictionary[phrase[i]] == 'N':
                         phrase[i] = 0
@@ -51,7 +53,7 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
                     #     phrase[i] = -1
                     #     # print('-')
                 words_to_symbols.append(phrase[i])
-                if i == len(phrase)-1:
+                if i == len(phrases)-1:
                     frazes.append(words_to_symbols)
                 # print([phrase[i]])
 
@@ -60,6 +62,7 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
 
                 # If our knowledge base has the word's sentiment
                 if phrase[i] in basal_sentiment_dictionary:
+
                     # Print the sentiment
                     if basal_sentiment_dictionary[phrase[i]] == 'N':
                         phrase[i] = 0
@@ -139,9 +142,9 @@ def polarity(phrases, basal_sentiment_dictionary, basal_determiner_bank):
                     #     phrase[i+1] = -1
                     #     # print('-')
                 words_to_symbols.append(tuple((phrase[i],phrase[i+1])))
-                if i == len(phrase)-1 or i == len(phrase)-2:
+                if i == len(phrases)-1:
                     frazes.append(words_to_symbols)
             # print(phrase)
             # print(words_to_symbols)
-        # print (words_to_symbols)
+
     return frazes

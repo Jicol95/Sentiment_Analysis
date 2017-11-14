@@ -10,8 +10,6 @@ from Tree import listify
 from SentimentDict import read_files, read_det_file
 # Function for grouping, voting and returns the sentient of a sentece
 from sentence_sentiment import sentence_sentiment
-# Function that splits both +ve and -ve reviews by line
-from reviewParse import initDic
 
 # populates a dictionary of words to which the sentiment is known
 basal_sentiment_dictionary = {}
@@ -23,40 +21,23 @@ basal_determiner_bank = read_det_file()
 #  Start StanfordCoreNLP server at port 9000
 stanford = StanfordCoreNLP('http://localhost:9000')
 
-reviews = initDic()
+# Text to be parsed
+text = 'The good bad dog is barking so loud'
+# Result of said parsing : Type (json)
+output = stanford.annotate(text, properties={'annotators': 'tokenize,ssplit,pos,depparse,parse', 'outputFormat': 'json'})
 
-pos_reviews = reviews['positiveReviews']
-neg_reviews = reviews['negativeReviews']
+#This is the tree
+s = output['sentences'][0]['parse']
 
-right = 0
-total = 0
-for text in neg_reviews:
+# Reformatting as an NLTK obj same type as s
+tree = Tree.fromstring(s)
+#tree.pretty_print()
 
-    text = str(text)
-    if text != '':
-        print(text)
-        total +=1
-        # Result of said parsing : Type (json)
-        output = stanford.annotate(text, properties={'annotators': 'tokenize,ssplit,pos,depparse,parse', 'outputFormat': 'json'})
+# Get the phrase from the tree
+phrases = listify(tree)
 
-        #This is the tree
-        s = output['sentences'][0]['parse']
+# Converts words in phrase to abstract polarity symbols
+words_as_polarity = polarity(phrases,basal_sentiment_dictionary,basal_determiner_bank)
 
-        # Reformatting as an NLTK obj same type as s
-        tree = Tree.fromstring(s)
-        # tree.pretty_print()
-
-        # Get the phrase from the tree
-        phrases = listify(tree)
-
-        # Converts words in phrase to abstract polarity symbols
-        words_as_polarity = polarity(phrases,basal_sentiment_dictionary,basal_determiner_bank)
-
-        # Calcualtes the sentiment of a sentence as per 'Sentiment Composition'
-        sentiment = sentence_sentiment(words_as_polarity)
-        try:
-            if int(sentiment) > 0:
-                right+=1
-        except:
-            pass
-print((right/total) *100)
+# Calcualtes the sentiment of a sentence as per 'Sentiment Composition'
+sentence_sentiment = sentence_sentiment(words_as_polarity)

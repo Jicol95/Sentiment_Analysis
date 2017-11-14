@@ -4,6 +4,7 @@ def listify(tree):
 
     # For leaf in the subtrees in tree
     for leaf in tree.subtrees():
+
         # If the leaf is a noun phrase
         if leaf.label() == 'NP':
 
