@@ -713,6 +713,7 @@ costlier
 costly
 counter-productive
 counterproductive
+countless
 coupists
 covetous
 coward
@@ -919,6 +920,7 @@ delay
 delayed
 delaying
 delays
+deleted
 delinquency
 delinquent
 delirious
@@ -2073,6 +2075,7 @@ hotbeds
 hothead
 hotheaded
 hothouse
+hours
 hubris
 huckster
 hum
@@ -2725,6 +2728,7 @@ limits
 limp
 listless
 litigious
+little
 little-known
 livid
 lividly
@@ -3428,6 +3432,7 @@ queer
 questionable
 quibble
 quibbles
+quiet
 quitter
 rabid
 racism
@@ -3956,6 +3961,7 @@ sourly
 spade
 spank
 spendy
+spent
 spew
 spewed
 spewing
@@ -4323,6 +4329,7 @@ trick
 tricked
 trickery
 tricky
+tried
 trivial
 trivialize
 trouble
@@ -4383,6 +4390,7 @@ uncivilized
 unclean
 unclear
 uncollectible
+unconventional
 uncomfortable
 uncomfortably
 uncomfy

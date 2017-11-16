@@ -901,6 +901,7 @@ heartily
 heartwarming
 heaven
 heavenly
+heaven-sent
 helped
 helpful
 helping
@@ -1082,11 +1083,10 @@ liberate
 liberation
 liberty
 lifesaver
+light
 light-hearted
 lighter
 likable
-like
-liked
 likes
 liking
 lionhearted
@@ -1158,6 +1158,7 @@ mature
 maturely
 maturity
 meaningful
+mega-static
 memorable
 merciful
 mercifully
@@ -1653,6 +1654,7 @@ sparkle
 sparkling
 spectacular
 spectacularly
+special
 speedily
 speedy
 spellbind
@@ -1756,6 +1758,7 @@ supurb
 supurbly
 surmount
 surpass
+surpassed
 surreal
 survival
 survivor

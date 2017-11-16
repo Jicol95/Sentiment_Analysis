@@ -21,3 +21,9 @@ def read_det_file():
     determiners = open('../Corpora/det-words.txt', 'r', encoding="ISO-8859-1")
     determiner_bank = re.findall(r"[a-z\-]+", determiners.read())
     return determiner_bank
+
+def read_negate_file():
+
+    negators = open('../Corpora/NegationWords.txt', 'r', encoding="ISO-8859-1")
+    negators_bank = re.findall(r"[a-z\-]+", negators.read())
+    return negators_bank

@@ -1,18 +1,12 @@
 # Install: pip install pycorenlp && wget http://nlp.stanford.edu/software/stanford-parser-full-2016-10-31.zip
 from pycorenlp import StanfordCoreNLP
-# Install: pip install nltk
-from nltk.tree import Tree
-# Function that converts words to abstract polarity values
-from polarity import polarity
-# Gets the phrase of a sentence
-from Tree import listify
+# Import regular expression
+import re
 # Functions for populating the knowledge base
-from SentimentDict import read_files, read_det_file
+from SentimentDict import read_files, read_det_file, read_negate_file
 # returns a dict of reviews
 from reviewParse import initDic
-# Function for grouping, voting and returns the sentient of a sentece
-from sentence_sentiment import sentence_sentiment
-import re
+from classify import classify
 
 # populates a dictionary of words to which the sentiment is known
 basal_sentiment_dictionary = {}
@@ -20,6 +14,10 @@ read_files(basal_sentiment_dictionary)
 
 # Generates a list of known determiners
 basal_determiner_bank = read_det_file()
+
+# Generates a list of known negators
+negators_bank = read_negate_file()
+
 
 # dictionary of reviews
 reviews = initDic()
@@ -29,26 +27,44 @@ negReviews = reviews['negativeReviews']
 #  Start StanfordCoreNLP server at port 9000
 stanford = StanfordCoreNLP('http://localhost:9000')
 
+# # Text to be parsed
+# text = "The senotors supporting the leader failed to support his hopeless HIV prevention program."
 
-# Text to be parsed
-text = "The senetors supporting the leaders wouldn't praise his hopless HV prevention program"
-text = re.sub(r'[^\w\s]','',text)
-print(text)
-# Result of said parsing : Type (json)
-output = stanford.annotate(text, properties={'annotators': 'tokenize,ssplit,pos,depparse,parse', 'outputFormat': 'json'})
+counter = 0
+right = 0
+neutral_count = 0
+for text in negReviews:
+    if text != '':
+        counter += 1
+        words = str(text)
+        sent = classify(words, basal_sentiment_dictionary, basal_determiner_bank, negators_bank, stanford)
+        if int(sent) < 0:
+            right +=1
+        if int(sent) == 0:
+            neutral_count += 1
+        print('\n\n\n\n')
 
-#This is the tree
-s = output['sentences'][0]['parse']
+neg_precision = 'Negative precision: ' + str((right/counter) *100)
+neg_neutral_prescion = 'Negative precision (excluding neutral): ' + str((right/(counter - neutral_count))*100)
 
-# Reformatting as an NLTK obj same type as s
-tree = Tree.fromstring(s)
-tree.pretty_print()
+counter = 0
+right = 0
+neutral_count = 0
+for text in posReviews:
+    if text != '':
+        counter += 1
+        words = str(text)
+        sent = classify(words, basal_sentiment_dictionary, basal_determiner_bank, negators_bank, stanford)
+        if int(sent) > 0:
+            right +=1
+        if int(sent) == 0:
+            neutral_count += 1
+        print('\n\n\n\n')
 
-# Get the phrase from the tree
-phrases = listify(tree)
+pos_precision = 'Positive precision: ' + str((right/counter) *100)
+pos_neutral_prescion = 'Positive precision (excluding neutral): ' + str((right/(counter - neutral_count))*100)
 
-# Converts words in phrase to abstract polarity symbols
-words_as_polarity = polarity(phrases,basal_sentiment_dictionary,basal_determiner_bank)
-
-# Calcualtes the sentiment of a sentence as per 'Sentiment Composition'
-sentence_sentiment = sentence_sentiment(words_as_polarity)
+print(neg_precision)
+print(neg_neutral_prescion)
+print(pos_precision)
+print(pos_neutral_prescion)

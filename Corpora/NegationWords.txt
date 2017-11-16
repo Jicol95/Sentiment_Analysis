@@ -1,5 +1,8 @@
+barely
+but
 no
 not
+n't
 none
 nobody
 nothing
@@ -7,6 +10,7 @@ neither
 nowhere
 never
 hardly
+seemed
 scarcely
 barely
 doesn’t
@@ -16,5 +20,4 @@ shouldn’t
 wouldn’t
 couldn’t
 won’t
-can’t
 don’t
